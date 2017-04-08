@@ -21,8 +21,25 @@ class Contato extends CI_Controller {
       if($this->form_validation->run() == FALSE) {
           $data['formErrors'] = validation_errors();
       } else {
-          $this->session->set_flashdata('success_msg', 'Contato recebido com sucesso!');
-          $data['formErrors'] = null;
+          $formData = $this->input->post();  //recupera os dados enviados pelo formulario
+          $emailStatus = $this->SendEmailToAdmin(
+              $formData['email'],
+              $formData['nome'],
+              "to@domain.com",
+              "To name",
+              $formData['assunto'],
+              $formData['mensagem'],
+              $formData['email'],
+              $formData['nome']
+          );
+
+          if($emailStatus) {
+              $this->session->set_flashdata('success_msg', 'Contato recebido com sucesso!');
+              $data['formErrors'] = null;
+          } else {
+              $data['formErrors'] = "Desculpe! Não foi possivel enviar o seu contato. Tente novamente mais tarde";
+          }
+            
       }
 
       $this->load->view('commons/header', $data);
@@ -37,6 +54,38 @@ class Contato extends CI_Controller {
       $this->load->view('commons/header', $data);
       $this->load->view('trabalhe-conosco');
       $this->load->view('commons/footer');
+  }
+
+
+  private function SendEmailToAdmin($from, $fromName, $to, $toName, $subject, $message, $reply = null, $replyName = null) {
+      $this->load->library('email');  //carregando a biblioteca 'email' do CodeIgniter
+
+      //Configuraçoes de envio do email
+      $config['charset'] = 'utf-8';
+      $config['wordwrap'] =  TRUE;
+      $config['mailtype'] = 'html';
+      $config['protocol'] = 'smtp';
+      $config['smtp_host'] = 'smtp.seudominio.com.br';
+      $config['smtp_user'] = 'user@seudominio.com.br';
+      $config['smtp_pass'] = 'senha';
+      $config['newline'] = '\r\n';
+
+      $this->email->initialize($config);
+
+      $this->email->from($from, $fromName);
+      $this->email->to($to, $toName);
+
+      if(reply)
+        $this->email->reply_to($reply, $replyName);
+
+      $this->email->subject($subject);
+      $this->email->message($message);
+
+      if($this->email->send()) {
+          return true;
+      } else {
+          return false;
+      }
   }
 
 }
