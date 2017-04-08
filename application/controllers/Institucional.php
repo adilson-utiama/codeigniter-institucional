@@ -13,7 +13,9 @@ class Institucional extends CI_Controller {
       $data['title'] = "LCI - HOME";
       $data['description'] = "Exercicio de exemplo do capitulo 5 do livro Codeigniter";
 
-      $this->load->view('home', $data);
+      $this->load->view('commons/header', $data);
+      $this->load->view('home');
+      $this->load->view('commons/footer');
   }
 
   public function Empresa() {
