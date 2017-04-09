@@ -8,15 +8,29 @@ class Contato extends CI_Controller {
       $this->load->helper('form');
   }
 
+  private function RegrasValidacao() {
+      return $rules = array(
+          array('field' => 'nome', 'label' => 'Nome', 'rules' => 'trim|required|min_length[4]',
+              array(
+                'required' => 'O campo {field} é Obrigatório.',
+                'min_length' => 'O campo {field} não pode ter menos de {param} caracteres'
+              )),
+          array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
+          array('field' => 'assunto', 'label' => 'Assunto', 'rules' => 'trim|required|min_length[5]'),
+          array('field' => 'mensagem', 'label' => 'Mensagem', 'rules' => 'trim|required|min_length[30]')
+      );
+  }
+
   public function FaleConosco() {
       $data['title'] = "LCI | Fale Conosco";
       $data['description'] = "Exercicio de exemplo do captulo 5 do Livro Codeigniter";
 
       //Regra de validação
-      $this->form_validation->set_rules('nome', 'Nome', 'trim|required|min_length[3]');
-      $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-      $this->form_validation->set_rules('assunto', 'Assunto', 'trim|required|min_length[5]');
-      $this->form_validation->set_rules('mensagem', 'Mensagem', 'trim|required|min_length[30]');
+      $this->form_validation->set_rules($this->RegrasValidacao());
+      // $this->form_validation->set_rules('nome', 'Nome', 'trim|required|min_length[3]');
+      // $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+      // $this->form_validation->set_rules('assunto', 'Assunto', 'trim|required|min_length[5]');
+      // $this->form_validation->set_rules('mensagem', 'Mensagem', 'trim|required|min_length[30]');
 
       if($this->form_validation->run() == FALSE) {
           $data['formErrors'] = validation_errors();
