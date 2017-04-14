@@ -5,7 +5,7 @@ class User extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('User_model');
-        $this->load->library(array('form_validation', 'session'));
+        $this->load->library(array('form_validation'));
     }
 
     public function Login() {
@@ -89,13 +89,54 @@ class User extends CI_Controller {
 
     public function Urls() {
         $this->load->model('Urls_model');
-        $urls = $this->Urls_model->getAllByuser($this->session->userdata('id'));
+        $config = $this->PaginationConfiguration();
+        $this->pagination->initialize($config);
+
+        if($this->uri->segment(2)) {
+            $data['testeValor'] = 'Teste: ' . $this->uri->segment(2);
+            //$offset = ($this->uri->segment(2) - 1) * $config['per_page'];
+            $offset = 1;
+        } else {
+            $offset = 0;
+        }
+
+        $urls = $this->Urls_model->getAllByPage($this->session->userdata('id'), $config['per_page'], $offset);
 
         $data['urls'] = $urls;
         $data['error'] = null;
         $data['short_url'] = false;
+        $data['pagination'] = $this->pagination->create_links();
 
         $this->load->view('short-urls/minhas-urls', $data);
+    }
+
+    private function PaginationConfiguration() {
+        $config['base_url'] = base_url('short-urls/minhas-urls');
+        $config['total_rows'] = $this->db->select('*')->from('urls')->where('user_id',$this->session->userdata('id'))->count_all_results();
+        $config['per_page'] = 5;
+        $config['uri_segment'] = 2;
+        $config['num_links'] = 5;
+        $config['use_page_numbers'] = TRUE;
+        $config['full_tag_open'] = "<nav><ul class='pagination'>";
+        $config['full_tag_close'] = "</ul></nav>";
+        $config['first_link'] = "Primeira";
+        $config['first_tag_open'] = "<li>";
+        $config['first_tag_close'] = "</li>";
+        $config['last_link'] = "Última";
+        $config['last_tag_open'] = "<li>";
+        $config['last_tag_close'] = "</li>";
+        $config['next_link'] = "Próxima";
+        $config['next_tag_open'] = "<li>";
+        $config['next_tag_close'] = "</li>";
+        $config['prev_link'] = "Anterior";
+        $config['prev_tag_open'] = "<li>";
+        $config['prev_tag_close'] = "</li>";
+        $config['cur_tag_open'] = "<li class='active'><a href='#'>";
+        $config['cur_tag_close'] = "</a></li>";
+        $config['num_tag_open'] = "<li>";
+        $config['num_tag_close'] = "</li>";
+
+        return $config;
     }
 
 

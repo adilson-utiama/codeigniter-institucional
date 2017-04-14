@@ -27,7 +27,7 @@ class Urls_model extends CI_Model {
     }
 
     //retorna dados de uma url a partir do codigo
-    function Fetch($utr_code) {
+    function Fetch($url_code) {
         $this->db->select('*')->from('urls')->where('code', $url_code)->limit(1);
         $result = $this->db->get()->result();
         if($result) {
@@ -40,6 +40,16 @@ class Urls_model extends CI_Model {
     //Retorna todas as urls encurtadas por um usuario
     function GetAllByUser($user_id) {
         $this->db->select('*')->from('urls')->where('user_id', $user_id);
+        $result = $this->db->get()->result();
+        if($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    function GetAllByPage($user_id, $limit, $offset) {
+         $this->db->select('*')->from('urls')->where('user_id',$user_id)->limit($limit,$offset);
         $result = $this->db->get()->result();
         if($result) {
             return $result;

@@ -64,5 +64,6 @@ $route['short-urls/logout'] = 'User/Logout';
 $route['short-urls/user'] = 'User/Index';
 $route['short-urls/user/register'] = 'User?register';
 $route['short-urls/minhas-urls'] = 'User/Urls';
+$route['short-urls/minhas-urls/(:num)'] = "User/Urls/$1";
 $route['short-urls/alterar-senha'] = 'User/UpdatePassw';
 $route['(:any)'] = 'Urls/Go';

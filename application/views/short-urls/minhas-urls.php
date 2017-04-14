@@ -14,7 +14,7 @@
       <?php
         }
       ?>
-
+      <h4><?=$testeValor?></h4>
       <form action="<?=base_url('short-urls/home')?>" method="POST">
         <label class="col-md-8 col-md-offset-2">
           <input type="text" class="form-control" placeholder="URL" name="address"/>
@@ -41,6 +41,8 @@
           <tr><td><?=$url->address?></td><td><a href="<?=base_url($url->code)?>" target="_blank"><?=base_url($url->code)?></a></td></tr>
       <?php } ?>
       </table>
+      <div class="clearfix"></div>
+      <?=$pagination?>
       <?php }else{ ?>
         <p>Nenhuma URL encurtada.</p>
       <?php  } ?>
