@@ -15,7 +15,7 @@
           </div>
       <?php } } ?>
 
-      <form class="form-horizontal" method="POST" action="">
+      <form class="form-horizontal" method="POST" action="<?=base_url('fale-conosco')?>">
 
         <!-- Text input-->
         <div class="form-group">
@@ -55,6 +55,19 @@
             </textarea>
           </div>
         </div>
+
+        <!-- Captcha -->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="captcha">Captcha</label>
+          <div class="col-md-4">
+            <input id="captcha" name="captcha" placeholder="Captcha" class="form-control input-md" required="true" type="text" value="" >
+          </div>
+          <div class="col-md-4">
+            <?=$captcha_image?>
+          </div>
+        </div>
+
+
 
         <!-- Button -->
         <div class="form-group">
