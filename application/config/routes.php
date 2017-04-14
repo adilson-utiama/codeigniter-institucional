@@ -57,3 +57,12 @@ $route['empresa'] = 'Institucional/Empresa';
 $route['servicos']  = 'Institucional/Servicos';
 $route['fale-conosco'] = "Contato/FaleConosco";
 $route['trabalhe-conosco'] = "Contato/TrabalheConosco";
+
+$route['short-urls/home'] = 'Urls/Index';
+$route['short-urls/login'] = 'User/Login';
+$route['short-urls/logout'] = 'User/Logout';
+$route['short-urls/user'] = 'User/Index';
+$route['short-urls/user/register'] = 'User?register';
+$route['short-urls/minhas-urls'] = 'User/Urls';
+$route['short-urls/alterar-senha'] = 'User/UpdatePassw';
+$route['(:any)'] = 'Urls/Go';

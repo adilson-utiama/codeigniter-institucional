@@ -1,0 +1,18 @@
+CREATE DATABASE short_urls;
+
+CREATE TABLE users (
+	id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name varchar(255) DEFAULT '',
+	email varchar(255) NOT NULL DEFAULT '',
+	passw varchar(255) NOT NULL DEFAULT '',
+	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE urls (
+	id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	code varchar(10) NOT NULL,
+	address text NOT NULL,
+	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	user_id int(11) DEFAULT NULL,
+	CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8; 

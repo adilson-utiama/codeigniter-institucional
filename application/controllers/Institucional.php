@@ -6,7 +6,7 @@ class Institucional extends CI_Controller {
   //Cacheando todas as funcoes que retornam uma "view"
   public function __construct() {
       parent::__construct();
-      $this->output->cache(1440);
+      //$this->output->cache(1440);
   }
 
   public function index(){

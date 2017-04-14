@@ -17,6 +17,7 @@
     <link href="http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    <!-- <link href="<?=base_url('assets/css/home.css')?>" rel="stylesheet"> -->
     <link href="<?=base_url('assets/css/internas.css')?>" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
